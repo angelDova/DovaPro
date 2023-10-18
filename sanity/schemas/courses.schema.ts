@@ -40,9 +40,9 @@ const schema = {
       options: {
         list: [
           "Art of the Triangle",
+          "Guillotine Mastery",
           "Coach, What Do I Do From 50/50?",
           "All Aspects of the Armbar",
-          "Guillotine Mastery",
           "All Access Dojo Membership/Month",
           "All Access Dojo Membership/Year",
         ],

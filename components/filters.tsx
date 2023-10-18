@@ -37,5 +37,3 @@ const Filters = () => {
 };
 
 export default Filters;
-
-// 1:01:38
