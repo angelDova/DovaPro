@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { getCourses } from "@/sanity/actions";
 import Image from "next/image";
 
+// import { readClient } from "@/sanity/lib/client";
+// import { buildQuery } from "@/sanity/utils";
+// import { groq } from "next-sanity";
+
 export const revalidate = 900;
 
 interface Props {
@@ -13,15 +17,48 @@ interface Props {
 }
 
 const Page = async ({ searchParams }: Props) => {
-  console.log(searchParams);
-
   const courses = await getCourses({
-    query: "",
-    category: "",
+    query: searchParams?.query || "",
+    category: searchParams?.category || "",
     page: "1",
   });
-
   console.log(courses);
+
+  // interface getCoursesParams {
+  //   searchParams: { [key: string]: string | undefined };
+  // }
+
+  // export const getCourses = async (params: getCoursesParams) => {
+  //   const { query, category, page } = params;
+
+  //   try {
+  //     console.log("Querying courses with params:", params);
+
+  //     const courses = await readClient.fetch(
+  //       groq`${buildQuery({
+  //         type: "courses",
+  //         query,
+  //         category,
+  //         page: parseInt(page),
+  //       })}{
+  //         title,
+  //         _id,
+  //         downloadLink,
+  //         "image": poster.asset->url,
+  //         views,
+  //         slug,
+  //         category
+  //       }`
+  //     );
+
+  //     console.log("Received courses:", courses);
+
+  //     return courses;
+  //   } catch (error) {
+  //     console.error("Error fetching courses:", error);
+  //     return []; // Return an empty array in case of an error.
+  //   }
+  // };
 
   return (
     <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
@@ -37,14 +74,14 @@ const Page = async ({ searchParams }: Props) => {
         <Header />
         <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
           {courses?.length > 0 ? (
-            courses.map((course: any) => (
+            courses.map((courses: any) => (
               <CourseCard
-                key={course._id}
-                title={course.title}
-                id={course._id}
-                image={course.image}
-                purchaseCourse={course.views}
-                // downloadLink={course.downloadLink}
+                key={courses._id}
+                title={courses.title}
+                id={courses._id}
+                image={courses.image}
+                purchaseCourse={courses.views}
+                downloadLink={courses.downloadLink}
               />
             ))
           ) : (

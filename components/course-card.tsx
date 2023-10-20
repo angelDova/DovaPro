@@ -309,7 +309,7 @@ interface Props {
   title: string;
   image: string;
   purchaseCourse: number;
-  //   downloadLink: string;
+  downloadLink: string;
 }
 
 const CourseCard = ({
