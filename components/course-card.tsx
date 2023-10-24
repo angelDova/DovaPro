@@ -347,7 +347,7 @@ Props) => {
           target="_blank"
           className="flex-center text-gradient_purple-blue body-semibold gap-1.5"
         >
-          Purchase Now
+          Purchase-Now
           <Image src="/arrow-blue.svg" width={13} height={10} alt="arrow" />
         </Link>
       </CardContent>
