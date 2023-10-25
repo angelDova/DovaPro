@@ -317,8 +317,8 @@ const CourseCard = ({
   title,
   image,
   purchaseCourse,
-}: //   downloadLink,
-Props) => {
+  downloadLink,
+}: Props) => {
   return (
     <Card className="w-full max-w-fit border-0 !bg-transparent sm:max-w-[356px]">
       <Link href="/" target="_blank">

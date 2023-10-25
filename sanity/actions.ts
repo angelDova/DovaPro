@@ -65,7 +65,7 @@ interface GetCoursesParams {
 export const getCoursesPlaylist = async () => {
   try {
     const courses = await readClient.fetch(
-      groq`*[_type == "coursePlaylist"]{
+      groq`*[_type == "coursesPlaylist"]{
         _id,
         title,
         courses[0...6]->{

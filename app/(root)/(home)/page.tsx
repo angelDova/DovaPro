@@ -3,7 +3,7 @@ import Filters from "@/components/filters";
 import Header from "@/components/header";
 import SearchForm from "@/components/search-form";
 import { Button } from "@/components/ui/button";
-import { getCourses } from "@/sanity/actions";
+import { getCourses, getCoursesPlaylist } from "@/sanity/actions";
 import Image from "next/image";
 
 // import { readClient } from "@/sanity/lib/client";
@@ -22,43 +22,10 @@ const Page = async ({ searchParams }: Props) => {
     category: searchParams?.category || "",
     page: "1",
   });
-  console.log(courses);
 
-  // interface getCoursesParams {
-  //   searchParams: { [key: string]: string | undefined };
-  // }
+  const coursesPlaylist = await getCoursesPlaylist();
 
-  // export const getCourses = async (params: getCoursesParams) => {
-  //   const { query, category, page } = params;
-
-  //   try {
-  //     console.log("Querying courses with params:", params);
-
-  //     const courses = await readClient.fetch(
-  //       groq`${buildQuery({
-  //         type: "courses",
-  //         query,
-  //         category,
-  //         page: parseInt(page),
-  //       })}{
-  //         title,
-  //         _id,
-  //         downloadLink,
-  //         "image": poster.asset->url,
-  //         views,
-  //         slug,
-  //         category
-  //       }`
-  //     );
-
-  //     console.log("Received courses:", courses);
-
-  //     return courses;
-  //   } catch (error) {
-  //     console.error("Error fetching courses:", error);
-  //     return []; // Return an empty array in case of an error.
-  //   }
-  // };
+  console.log(coursesPlaylist);
 
   return (
     <main className="flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
@@ -70,25 +37,30 @@ const Page = async ({ searchParams }: Props) => {
       </section>
       <Filters />
 
-      <section className="flex-center mt-6 w-full flex-col sm:mt-20">
-        <Header />
-        <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
-          {courses?.length > 0 ? (
-            courses.map((courses: any) => (
-              <CourseCard
-                key={courses._id}
-                title={courses.title}
-                id={courses._id}
-                image={courses.image}
-                purchaseCourse={courses.views}
-                downloadLink={courses.downloadLink}
-              />
-            ))
-          ) : (
-            <p className="body-regular text-white-400">No Courses Found 🧐</p>
-          )}
-        </div>
-      </section>
+      {coursesPlaylist.map((item: any) => (
+        <section
+          key={item._id}
+          className="flex-center mt-6 w-full flex-col sm:mt-20"
+        >
+          <Header />
+          <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
+            {courses?.length > 0 ? (
+              courses.map((course: any) => (
+                <CourseCard
+                  key={course._id}
+                  title={course.title}
+                  id={course._id}
+                  image={course.image}
+                  purchaseCourse={course.views}
+                  downloadLink={course.downloadLink}
+                />
+              ))
+            ) : (
+              <p className="body-regular text-white-400">No Courses Found 🧐</p>
+            )}
+          </div>
+        </section>
+      ))}
     </main>
   );
 };
